@@ -54,7 +54,7 @@ const Hero = () => {
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#B88A3E] to-[#6B4E20]">
             {text}
           </span>
-          <span className="animate-blink text-gray-900 dark:text-gray-100">|</span>
+          <span className="animate-blink">|</span>
         </h1>
         <motion.p
           initial={{ opacity: 0 }}

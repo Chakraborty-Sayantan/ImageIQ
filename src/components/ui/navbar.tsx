@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Link from "next/link"; 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X, Home } from "lucide-react"
@@ -31,10 +32,12 @@ const Navbar = () => {
   }
 
   const navItems = [
-    { name: "Home", href: "#home", onClick: () => scrollToSection('home') },
-    { name: "About", href: "#about", onClick: () => scrollToSection('about') },
-    { name: "Recent Works", href: "#recent-works", onClick: () => scrollToSection('recent-works') },
-    { name: "Contact", href: "#contact", onClick: () => scrollToSection('contact') },
+    { name: "Home", href: "/" },
+    { name: "About", href: "/#about" },
+    { name: "Services", href: "/#services" },
+    { name: "Portfolio", href: "/#recent-works" },
+    { name: "Pricing", href: "/pricing" },
+    { name: "Contact", href: "/contact" },
   ]
 
   return (
@@ -106,12 +109,11 @@ const Navbar = () => {
               transition={{ duration: 0.3 }}
               whileHover={{ scale: 1.05 }}
             >
-              <button
-                onClick={item.onClick}
-                className="text-sm text-black dark:text-foreground hover:text-primary transition-colors font-medium"
-              >
-                {item.name}
-              </button>
+             <Link href={item.href}>
+                <span className="text-sm text-black dark:text-foreground hover:text-primary transition-colors font-medium cursor-pointer">
+                  {item.name}
+                </span>
+              </Link>
             </motion.div>
           ))}
           <ThemeToggle />
@@ -128,12 +130,12 @@ const Navbar = () => {
           transition={{ duration: 0.3, delay: 0.2 }}
           whileHover={{ scale: 1.05 }}
         >
-          <button
+          {/* <button
             onClick={() => scrollToSection('contact')}
             className="inline-flex items-center justify-center px-5 py-2 text-sm text-primary-foreground bg-primary hover:bg-primary/90 dark:bg-primary dark:hover:bg-primary/90 rounded-full transition-colors"
           >
             Get Started
-          </button>
+          </button> */}
         </motion.div>
 
         <motion.button className="md:hidden flex items-center" onClick={toggleMenu} whileTap={{ scale: 0.9 }}>
@@ -169,12 +171,13 @@ const Navbar = () => {
                   transition={{ delay: i * 0.1 + 0.1 }}
                   exit={{ opacity: 0, x: 20 }}
                 >
-                  <button
-                    onClick={item.onClick}
-                    className="text-base text-foreground hover:text-primary font-medium"
-                  >
-                    {item.name}
-                  </button>
+                  <Link href={item.href}>
+                  <span className="text-base text-foreground hover:text-primary font-medium">
+                   {item.name}
+                  </span>
+                  </Link>
+                                        
+                  
                 </motion.div>
               ))}
 
@@ -185,12 +188,12 @@ const Navbar = () => {
                 exit={{ opacity: 0, y: 20 }}
                 className="pt-6"
               >
-                <button
+                {/* <button
                   onClick={() => scrollToSection('contact')}
                   className="inline-flex items-center justify-center w-full px-5 py-3 text-base text-primary-foreground bg-primary hover:bg-primary/90 dark:bg-primary dark:hover:bg-primary/90 rounded-full transition-colors"
                 >
                   Get Started
-                </button>
+                </button> */}
               </motion.div>
               <div className="pt-4">
                 <ThemeToggle />

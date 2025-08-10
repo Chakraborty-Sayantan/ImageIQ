@@ -1,23 +1,24 @@
 "use client";
-import { IconArrowNarrowRight } from "@tabler/icons-react";
 import { useState, useRef, useId, useEffect } from "react";
 
 interface SlideData {
   title: string;
   button: string;
   src: string;
+  category: string | null;
 }
 
 interface SlideProps {
   slide: SlideData;
   index: number;
   current: number;
-  handleSlideClick: (index: number) => void;
+  handleSlideClick: (category: string | null) => void;
 }
 
 const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
   const slideRef = useRef<HTMLLIElement>(null);
 
+  // ... (rest of the Slide component's internal logic is the same)
   const xRef = useRef(0);
   const yRef = useRef(0);
   const frameRef = useRef<number>(1);
@@ -25,18 +26,13 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
   useEffect(() => {
     const animate = () => {
       if (!slideRef.current) return;
-
       const x = xRef.current;
       const y = yRef.current;
-
       slideRef.current.style.setProperty("--x", `${x}px`);
       slideRef.current.style.setProperty("--y", `${y}px`);
-
       frameRef.current = requestAnimationFrame(animate);
     };
-
     frameRef.current = requestAnimationFrame(animate);
-
     return () => {
       if (frameRef.current) {
         cancelAnimationFrame(frameRef.current);
@@ -47,7 +43,6 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
   const handleMouseMove = (event: React.MouseEvent) => {
     const el = slideRef.current;
     if (!el) return;
-
     const r = el.getBoundingClientRect();
     xRef.current = event.clientX - (r.left + Math.floor(r.width / 2));
     yRef.current = event.clientY - (r.top + Math.floor(r.height / 2));
@@ -61,15 +56,16 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
   const imageLoaded = (event: React.SyntheticEvent<HTMLImageElement>) => {
     event.currentTarget.style.opacity = "1";
   };
+  // ... (end of internal logic)
 
-  const { src, button, title } = slide;
+  const { src, button, title, category } = slide;
 
   return (
     <div className="[perspective:1200px] [transform-style:preserve-3d]">
       <li
         ref={slideRef}
-        className="flex flex-1 flex-col items-center justify-center relative text-center text-white opacity-100 transition-all duration-300 ease-in-out w-[70vmin] h-[70vmin] mx-[4vmin] z-10 "
-        onClick={() => handleSlideClick(index)}
+        className="flex flex-1 flex-col items-center justify-center relative text-center text-white opacity-100 transition-all duration-300 ease-in-out w-[70vmin] h-[70vmin] mx-[4vmin] z-10 cursor-pointer"
+        onClick={() => handleSlideClick(category)}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
         style={{
@@ -125,35 +121,35 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
   );
 };
 
+// ... (CarouselControl component remains the same)
 interface CarouselControlProps {
   type: string;
   title: string;
   handleClick: () => void;
 }
 
-const CarouselControl = ({
-  type,
-  title,
-  handleClick,
-}: CarouselControlProps) => {
+const CarouselControl = ({ type, title, handleClick }: CarouselControlProps) => {
   return (
     <button
-      className={`w-10 h-10 flex items-center mx-2 justify-center bg-neutral-200 dark:bg-neutral-800 border-3 border-transparent rounded-full focus:border-[#6D64F7] focus:outline-none hover:-translate-y-0.5 active:translate-y-0.5 transition duration-200 ${
+      className={`w-10 h-10 flex items-center mx-2 justify-center border-3 border-transparent rounded-full focus:border-[#6D64F7] focus:outline-none hover:-translate-y-0.5 active:translate-y-0.5 transition duration-200 ${
         type === "previous" ? "rotate-180" : ""
       }`}
       title={title}
       onClick={handleClick}
     >
-      <IconArrowNarrowRight className="text-neutral-600 dark:text-neutral-200" />
+      {/* Assuming you'll add an icon library or SVG for the arrow */}
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
     </button>
   );
 };
 
+
 interface CarouselProps {
   slides: SlideData[];
+  onSlideClick: (category: string | null) => void;
 }
 
-export function Carousel({ slides }: CarouselProps) {
+export function Carousel({ slides, onSlideClick }: CarouselProps) {
   const [current, setCurrent] = useState(0);
 
   const handlePreviousClick = () => {
@@ -166,10 +162,8 @@ export function Carousel({ slides }: CarouselProps) {
     setCurrent(next === slides.length ? 0 : next);
   };
 
-  const handleSlideClick = (index: number) => {
-    if (current !== index) {
-      setCurrent(index);
-    }
+  const handleSlideClick = (category: string | null) => {
+    onSlideClick(category);
   };
 
   const id = useId();
@@ -202,7 +196,6 @@ export function Carousel({ slides }: CarouselProps) {
           title="Go to previous slide"
           handleClick={handlePreviousClick}
         />
-
         <CarouselControl
           type="next"
           title="Go to next slide"
@@ -211,4 +204,4 @@ export function Carousel({ slides }: CarouselProps) {
       </div>
     </div>
   );
-} 
+}
