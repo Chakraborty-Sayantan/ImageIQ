@@ -1,37 +1,17 @@
-"use client"
-
 import { Navbar } from "@/components/ui/navbar";
 import { Hero } from "@/components/ui/hero";
-import { CarouselDemo } from "@/components/ui/carousel-demo";
-import { RecentWorks } from "@/components/ui/recent-works";
-import { LogosSlider } from "@/components/ui/clients-demo";
 import { Footer } from "@/components/ui/footer-section";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
-import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import dynamic from 'next/dynamic';
 
-function ThemeWrapper({ children }: { children: React.ReactNode }) {
-  const { theme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return <main className="min-h-screen bg-white dark:bg-black text-black dark:text-gray-100">{children}</main>;
-  }
-
-  return (
-    <main className={`min-h-screen transition-colors duration-300 ${theme === 'dark' ? 'bg-black text-gray-100' : 'bg-white text-black'}`}>
-      {children}
-    </main>
-  );
-}
+// Lazy load components that are not in the initial viewport
+const CarouselDemo = dynamic(() => import('@/components/ui/carousel-demo').then(mod => mod.CarouselDemo));
+const RecentWorks = dynamic(() => import('@/components/ui/recent-works').then(mod => mod.RecentWorks));
+const LogosSlider = dynamic(() => import('@/components/ui/clients-demo').then(mod => mod.LogosSlider));
 
 export default function Home() {
   return (
-    <ThemeWrapper>
+    <main className="min-h-screen">
       <div className="flex flex-col min-h-screen">
         <Navbar />
         <div className="flex-1">
@@ -48,6 +28,6 @@ export default function Home() {
         <Footer />
         <ScrollToTop />
       </div>
-    </ThemeWrapper>
+    </main>
   );
 }

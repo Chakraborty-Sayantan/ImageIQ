@@ -1,4 +1,4 @@
-"use client" 
+"use client"
 
 import * as React from "react"
 import { useState, useEffect } from "react"
@@ -38,16 +38,16 @@ const Navbar = () => {
   ]
 
   return (
-    <motion.div 
-      className="sticky top-0 z-50 flex justify-center w-full py-6 px-4 bg-background/80 backdrop-blur-sm"
+    <motion.div
+      className="sticky top-0 z-50 flex justify-center w-full py-6 px-4 backdrop-blur-sm"
       animate={{
         paddingTop: isScrolled ? "0.5rem" : "1.5rem",
         paddingBottom: isScrolled ? "0.5rem" : "1.5rem",
       }}
       transition={{ duration: 0.3 }}
     >
-      <motion.div 
-        className="flex items-center justify-between px-6 py-3 bg-card dark:bg-card border border-border dark:border-border rounded-full shadow-sm w-full relative"
+      <motion.div
+        className="flex items-center justify-between px-6 py-3 bg-card dark:bg-card border  rounded-full shadow-sm w-full relative "
         animate={{
           padding: isScrolled ? "0.5rem 1.5rem" : "0.75rem 1.5rem",
           maxWidth: isScrolled ? "800px" : "1024px",
@@ -58,7 +58,7 @@ const Navbar = () => {
           <motion.div
             className="w-12 h-12 mr-6 rounded-full"
             initial={{ scale: 0.8 }}
-            animate={{ 
+            animate={{
               scale: 1,
               width: isScrolled ? "2.5rem" : "3rem",
               height: isScrolled ? "2.5rem" : "3rem",
@@ -90,9 +90,8 @@ const Navbar = () => {
             )}
           </motion.div>
         </div>
-        
-        {/* Desktop Navigation */}
-        <motion.nav 
+
+        <motion.nav
           className="hidden md:flex items-center space-x-8"
           animate={{
             gap: isScrolled ? "1.5rem" : "2rem"
@@ -107,9 +106,9 @@ const Navbar = () => {
               transition={{ duration: 0.3 }}
               whileHover={{ scale: 1.05 }}
             >
-              <button 
+              <button
                 onClick={item.onClick}
-                className="text-sm text-foreground hover:text-primary transition-colors font-medium"
+                className="text-sm text-black dark:text-foreground hover:text-primary transition-colors font-medium"
               >
                 {item.name}
               </button>
@@ -118,12 +117,11 @@ const Navbar = () => {
           <ThemeToggle />
         </motion.nav>
 
-        {/* Desktop CTA Button */}
         <motion.div
           className="hidden md:block"
           initial={{ opacity: 0, x: 20 }}
-          animate={{ 
-            opacity: 1, 
+          animate={{
+            opacity: 1,
             x: 0,
             scale: isScrolled ? 0.9 : 1
           }}
@@ -138,13 +136,11 @@ const Navbar = () => {
           </button>
         </motion.div>
 
-        {/* Mobile Menu Button */}
         <motion.button className="md:hidden flex items-center" onClick={toggleMenu} whileTap={{ scale: 0.9 }}>
           <Menu className="h-6 w-6 text-foreground" />
         </motion.button>
       </motion.div>
 
-      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -173,7 +169,7 @@ const Navbar = () => {
                   transition={{ delay: i * 0.1 + 0.1 }}
                   exit={{ opacity: 0, x: 20 }}
                 >
-                  <button 
+                  <button
                     onClick={item.onClick}
                     className="text-base text-foreground hover:text-primary font-medium"
                   >
@@ -207,4 +203,4 @@ const Navbar = () => {
   )
 }
 
-export { Navbar } 
+export { Navbar }

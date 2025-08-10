@@ -1,5 +1,6 @@
 import { InfiniteSlider } from '@/components/ui/infinite-slider';
 import { ProgressiveBlur } from '@/components/ui/progressive-blur';
+import Image from 'next/image';
 
 const logos = [
   {
@@ -41,9 +42,11 @@ export function LogosSlider() {
             key={logo.id} 
             className='flex w-32 items-center justify-center'
           >
-            <img
+            <Image
               src={logo.image}
               alt={logo.description}
+              width={128}
+              height={28}
               className={logo.className}
             />
           </div>

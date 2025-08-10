@@ -4,13 +4,12 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
 
-
 const works = [
   {
     id: 1,
     title: "Mountain Landscape",
     description: "Serene mountain view at sunset",
-    image: "Recents/1.png",
+    image: "/Recents/1.png",
     height: "h-72"
   },
   {
@@ -51,20 +50,20 @@ const works = [
 ];
 
 export function RecentWorks() {
-  const [imageError, setImageError] = useState<{[key: number]: boolean}>({});
+  const [imageError, setImageError] = useState<{ [key: number]: boolean }>({});
 
   return (
-    <section className="w-full py-20 px-4 md:px-8 bg-background">
+    <section className="w-full py-20 px-4 md:px-8">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-4xl font-bold text-center mb-12 text-foreground">RECENT WORKS</h2>
-        
+        <h2 className="text-4xl font-bold text-center mb-12">RECENT WORKS</h2>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {works.map((work, index) => (
             <motion.div
               key={work.id}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ 
+              transition={{
                 duration: 0.8,
                 delay: index * 0.2,
                 ease: "easeOut"
@@ -72,7 +71,7 @@ export function RecentWorks() {
               viewport={{ once: true, margin: "-100px" }}
               className={`relative ${work.height} group`}
             >
-              <div className="relative w-full h-full overflow-hidden rounded-lg border-4 border-foreground bg-background">
+              <div className="relative w-full h-full overflow-hidden rounded-lg border-4 border-black dark:border-foreground bg-background">
                 {!imageError[work.id] ? (
                   <div className="relative w-full h-full">
                     <Image
@@ -86,8 +85,7 @@ export function RecentWorks() {
                         setImageError(prev => ({ ...prev, [work.id]: true }));
                       }}
                       priority={work.id === 1}
-                      quality={100}
-                      unoptimized
+                      quality={80}
                     />
                   </div>
                 ) : (
@@ -108,4 +106,4 @@ export function RecentWorks() {
       </div>
     </section>
   );
-} 
+}

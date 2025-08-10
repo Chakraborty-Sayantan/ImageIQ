@@ -34,6 +34,7 @@ const Hero = () => {
 
   return (
     <div className="w-full flex flex-col items-center justify-center min-h-[calc(100vh-200px)]">
+      
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -59,7 +60,7 @@ const Hero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 0.8 }}
-          className="text-lg md:text-xl text-black dark:text-gray-300 max-w-2xl mx-auto"
+          className="text-lg md:text-xl max-w-2xl mx-auto"
         >
           Transforming ideas into stunning visual experiences. We create, innovate, and inspire through the power of design.
         </motion.p>
@@ -69,12 +70,12 @@ const Hero = () => {
           transition={{ delay: 1.5, duration: 0.8 }}
           className="mt-8"
         >
-          <a
-            href="#contact"
+          <button
+            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
             className="inline-flex items-center justify-center px-8 py-3 text-base font-medium text-white bg-black-900 dark:bg-gray-100 dark:text-gray-900 rounded-full hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors"
           >
             Get Started
-          </a>
+          </button>
         </motion.div>
       </motion.div>
     </div>
